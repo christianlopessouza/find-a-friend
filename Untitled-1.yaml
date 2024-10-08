@@ -1,0 +1,20 @@
+/src
+- /http
+-- /controllers
+--- create-user-controller.ts
+-- /routes
+--- user-routes.ts
+- /domain
+-- /{domain}
+--- /use-cases
+---- create-user.ts
+--- /repositories
+---- in-memory-user-repository.ts
+---- prisma-user-repository.ts
+---- knex-user-repository.ts
+- /infrastructre
+-- db-conn.ts
+- /tests
+- /config
+-- env/
+

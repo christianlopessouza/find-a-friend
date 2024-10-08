@@ -1,0 +1,172 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Db Enums
+
+enum Size {
+  small
+  medium
+  big
+}
+
+enum Level {
+  low
+  medium
+  high
+}
+
+enum Status {
+  deleted
+  active
+}
+
+// Models
+
+model Client {
+  id    String @id @default(cuid())
+  name  String
+  email String @unique
+
+  @@map("clients")
+}
+
+model Pet {
+  id                  String                @id @default(cuid())
+  createAt            DateTime              @default(now())
+  name                String
+  description         String?
+  size                Size
+  birthDate           DateTime
+  dependencyLevel     Level
+  energyLevel         Level
+  Environment         Environment           @relation(fields: [environmentId], references: [id])
+  environmentId       Int
+  Owner               Owner?                @relation(fields: [ownerId], references: [id])
+  ownerId             String?
+  PetPicture          PetPicture[]
+  Race                Race                  @relation(fields: [raceId], references: [id])
+  raceId              String
+  AdoptionRequirement AdoptionRequirement[]
+  Organization        Organization?         @relation(fields: [organizationId], references: [id])
+  organizationId      String?
+
+  @@map("pets")
+}
+
+model Environment {
+  id       Int      @id @default(autoincrement())
+  createAt DateTime @default(now())
+  name     String
+
+  Pets Pet[]
+
+  @@map("environments")
+}
+
+model Owner {
+  id       String   @id @default(cuid())
+  createAt DateTime @default(now())
+
+  name String
+  Pets Pet[]
+
+  @@map("owners")
+}
+
+model PetPicture {
+  id       String   @id @default(cuid())
+  createAt DateTime @default(now())
+  status   Status   @default(active)
+
+  petId String
+  Pet   Pet    @relation(fields: [petId], references: [id])
+
+  @@map("pet_pictures")
+}
+
+model Race {
+  id       String   @id @default(cuid())
+  createAt DateTime @default(now())
+  name     String
+  Pets     Pet[]
+
+  animalId String
+  Animal   Animal @relation(fields: [animalId], references: [id])
+
+  @@map("races")
+}
+
+model Animal {
+  id       String   @id @default(cuid())
+  createAt DateTime @default(now())
+  name     String
+  Races    Race[]
+
+  @@map("animals")
+}
+
+model AdoptionRequirement {
+  id       Int      @id @default(autoincrement())
+  createAt DateTime @default(now())
+  name     String
+
+  petId String
+  Pet   Pet    @relation(fields: [petId], references: [id])
+
+  @@map("adoption_requirements")
+}
+
+model Organization {
+  id                  String                @id @default(cuid())
+  name                String
+  createAt            DateTime              @default(now())
+  Pets                Pet[]
+  OrganizationUser    OrganizationUser[]
+  OrganizationAddress OrganizationAddress[]
+
+  @@map("organizations")
+}
+
+model OrganizationUser {
+  id             String       @id @default(cuid())
+  createAt       DateTime     @default(now())
+  name           String
+  organizationId String
+  Organization   Organization @relation(fields: [organizationId], references: [id])
+
+  @@map("organization_users")
+}
+
+model City {
+  id      Int    @id @default(autoincrement())
+  name    String
+  stateId Int
+  State   State  @relation(fields: [stateId], references: [id])
+}
+
+model State {
+  id    Int    @id @default(autoincrement())
+  name  String
+  citys City[]
+}
+
+model OrganizationAddress {
+  id             Int          @id @default(autoincrement())
+  address        String
+  Organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+
+  @@map("organization_addresses")
+}
