@@ -1,15 +1,16 @@
 import { DependencyLevel } from '@/shared/enums'
 
 export interface Pet {
-    name: string
-    description: string
-    size: string
-    birthDate: Date
-    dependencyLevel: DependencyLevel
-    energyLevel: string
-    environment: Environment
-    race: Race,
-    adoptionRequirementId: Array<string>
+    id?: string
+    name?: string
+    description?: string
+    size?: string
+    birthDate?: Date
+    dependencyLevel?: DependencyLevel
+    energyLevel?: string
+    environment?: Environment
+    race?: Race,
+    adoptionRequirementId?: Array<string>
 }
 
 export interface Environment {

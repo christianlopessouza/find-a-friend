@@ -1,8 +1,5 @@
-import fastify from 'fastify'
-import { env } from '@/env'
-
-const app = fastify()
-
+import { env } from '@/config/env'
+import { app } from '@/app'
 
 app.listen({
     port: env.PORT,

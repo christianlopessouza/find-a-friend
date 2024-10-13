@@ -26,10 +26,8 @@ export class CreatePet {
             environmentId: pet.environmentId,
             raceId: pet.raceId,
         })
- 
+
         return response
-
-
     }
 }
 

@@ -143,6 +143,8 @@ model OrganizationUser {
   id             String       @id @default(cuid())
   createAt       DateTime     @default(now())
   name           String
+  email          String       @unique
+  password       String
   organizationId String
   Organization   Organization @relation(fields: [organizationId], references: [id])
 
