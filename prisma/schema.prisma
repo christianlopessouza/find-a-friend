@@ -132,6 +132,7 @@ model Organization {
   id                  String                @id @default(cuid())
   name                String
   createAt            DateTime              @default(now())
+  phoneNumber         String
   Pets                Pet[]
   OrganizationUser    OrganizationUser[]
   OrganizationAddress OrganizationAddress[]
@@ -152,23 +153,41 @@ model OrganizationUser {
 }
 
 model City {
-  id      Int    @id @default(autoincrement())
-  name    String
-  stateId Int
-  State   State  @relation(fields: [stateId], references: [id])
+  id         Int          @id @default(autoincrement())
+  name       String
+  stateId    Int
+  State      State        @relation(fields: [stateId], references: [id])
+  PostalCode PostalCode[]
 }
 
 model State {
-  id    Int    @id @default(autoincrement())
-  name  String
-  citys City[]
+  id         Int          @id @default(autoincrement())
+  name       String
+  citys      City[]
+  PostalCode PostalCode[]
 }
 
 model OrganizationAddress {
-  id             Int          @id @default(autoincrement())
-  address        String
-  Organization   Organization @relation(fields: [organizationId], references: [id])
-  organizationId String
+  id                Int          @id @default(autoincrement())
+  addressNumber     String
+  addressComplement String?
+  postalCodeId      Int
+  PostalCode        PostalCode   @relation(fields: [postalCodeId], references: [id])
+  Organization      Organization @relation(fields: [organizationId], references: [id])
+  organizationId    String
 
   @@map("organization_addresses")
+}
+
+model PostalCode {
+  id                  Int                   @id @default(autoincrement())
+  code                String
+  address             String
+  city                City                  @relation(fields: [cityId], references: [id])
+  state               State                 @relation(fields: [stateId], references: [id])
+  cityId              Int
+  stateId             Int
+  OrganizationAddress OrganizationAddress[]
+
+  @@map("postal_codes")
 }

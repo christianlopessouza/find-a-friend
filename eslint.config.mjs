@@ -15,7 +15,6 @@ export default [
             'quotes': ['error', 'single'],  // Força o uso de aspas simples
             'semi': ['error', 'never'],  // Exige ponto e vírgula
             'indent': ['error', 4],  // Define indentação de 2 espaços
-            'brace-style':['error','allman']
         }
     },
     pluginJs.configs.recommended,
