@@ -1,7 +1,9 @@
 import { OrganizationDbEntity } from '@/infrastructure/entities/organization-db-entity'
-import { Organization } from '@/domain/organization'
+import { Organization, OrganizationAddress } from '@/domain/organization'
+import { OrganizationAddressDbEntity } from '@/infrastructure/entities/organization-address-db-entity'
 
 export interface OrganizationRepository {
-    create(pet: OrganizationDbEntity): Promise<Organization>
-    update(pet: Partial<OrganizationDbEntity>): boolean
+    create(organization: OrganizationDbEntity): Promise<Organization>
+    createAddress(organizationAddress: OrganizationAddressDbEntity): Promise<OrganizationAddress>
+    update(organization: Partial<OrganizationDbEntity>): boolean
 }

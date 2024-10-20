@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
-import { createOrganizationUser } from '@/application/create-organization-user'
+import { createOrganizationUser } from '@/application/use-cases/create-organization-user'
 
 export async function createUserOrgController(request: FastifyRequest, reply: FastifyReply) {
     // try {

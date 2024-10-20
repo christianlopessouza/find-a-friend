@@ -133,6 +133,7 @@ model Organization {
   name                String
   createAt            DateTime              @default(now())
   phoneNumber         String
+  email               String
   Pets                Pet[]
   OrganizationUser    OrganizationUser[]
   OrganizationAddress OrganizationAddress[]
@@ -161,10 +162,9 @@ model City {
 }
 
 model State {
-  id         Int          @id @default(autoincrement())
-  name       String
-  citys      City[]
-  PostalCode PostalCode[]
+  id    Int    @id @default(autoincrement())
+  name  String
+  citys City[]
 }
 
 model OrganizationAddress {
@@ -183,10 +183,9 @@ model PostalCode {
   id                  Int                   @id @default(autoincrement())
   code                String
   address             String
+  district            String
   city                City                  @relation(fields: [cityId], references: [id])
-  state               State                 @relation(fields: [stateId], references: [id])
   cityId              Int
-  stateId             Int
   OrganizationAddress OrganizationAddress[]
 
   @@map("postal_codes")
